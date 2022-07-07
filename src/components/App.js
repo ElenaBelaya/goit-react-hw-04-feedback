@@ -4,9 +4,7 @@ import statTypes from "../../src/statTypes.json";
 export const App = () => {
   return (
     <div>
-   <Feedback
-   items={statTypes}
-   />
+   <Feedback />
       
     </div>
   );

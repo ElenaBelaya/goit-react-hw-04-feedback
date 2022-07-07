@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types';
+//import PropTypes from 'prop-types';
 import { Component } from 'react';
 import { Container, FeedbackTitle } from './Feedback.styled';
 import Statistics  from 'components/StatTypesBox/Statistics';
@@ -74,6 +74,6 @@ onLeaveFeedback={this.handleLeaveFeedback}/>
 
 export default Feedback;
 
-Feedback.propTypes = {
+//Feedback.propTypes = {
 
-}
+//}
