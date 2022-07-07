@@ -1,6 +1,6 @@
 import Feedback from "./feedback/Feedback";
-import { StatTypes } from "./feedback/Feedback.styled";
-import statTypes from "../../src/statTypes.json";
+//import { StatTypes } from "./feedback/Feedback.styled";
+
 export const App = () => {
   return (
     <div>
