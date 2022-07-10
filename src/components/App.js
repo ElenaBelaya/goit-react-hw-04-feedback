@@ -1,5 +1,5 @@
-import Feedback from "./feedback/Feedback";
-//import { StatTypes } from "./feedback/Feedback.styled";
+import Feedback from "./feedback";
+
 
 export const App = () => {
   return (

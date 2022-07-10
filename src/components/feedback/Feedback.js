@@ -1,9 +1,10 @@
-//import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { Component } from 'react';
+import options from '..//..//options.json';
 import { Container, FeedbackTitle } from './Feedback.styled';
 import Statistics  from 'components/StatTypesBox/Statistics';
-import FeedbackOptions from 'components/buttonList/FeedbackOptions';
-import NotificationMessage from 'components/notificationMessage/NotificationMessage';
+import FeedbackOptions from 'components/feedbackOptions';
+import NotificationMessage from 'components/notificationMessage';
 
 class Feedback extends Component {
 state = {good: 0,
@@ -11,32 +12,18 @@ state = {good: 0,
          bad: 0
          }
 
-handleLeaveFeedback = (event) => {
+handleLeaveFeedback = (option) => {
 
-switch (event.target.name) {
-    case "good":
-    return this.setState(prevState => ({
-     good: prevState.good + 1
-      }))
-      
-      case "neutral":
-    return this.setState(prevState => ({
-     neutral: prevState.neutral + 1
-      }))
-      
-      case "bad":
-    return this.setState(prevState => ({
-     bad: prevState.bad + 1
-      }))
-      default:
-     return this.state; 
-}
+this.setState(PrevState => ({
+[option.toLowerCase()]: PrevState[option.toLowerCase()] +1
 
+}))
 
 }
 countTotalFeedback = () => {
   const { good, neutral, bad } = this.state;
   return good + neutral + bad;
+  
      
    }
  
@@ -51,7 +38,7 @@ render() {
   <Container>
 <FeedbackTitle>Please leave feedback</FeedbackTitle>
 <FeedbackOptions
-
+options={options}
 onLeaveFeedback={this.handleLeaveFeedback}/>
 
 <FeedbackTitle>Statistics</FeedbackTitle>
@@ -74,6 +61,10 @@ onLeaveFeedback={this.handleLeaveFeedback}/>
 
 export default Feedback;
 
-//Feedback.propTypes = {
-
-//}
+Feedback.propTypes = {
+  option: PropTypes.string,
+  handleLeaveFeedback: PropTypes.func,
+  countTotalFeedback: PropTypes.func,
+  countPositiveFeedbackPercentage: PropTypes.func,
+  options: PropTypes.arrayOf(PropTypes.string),
+}
