@@ -1,67 +1,71 @@
 import PropTypes from 'prop-types';
-import { Component } from 'react';
-import options from '..//..//options.json';
+import { useState } from 'react';
 import { Container } from './Feedback.styled';
-import Statistics  from 'components/StatTypesBox/Statistics';
+import Statistics from 'components/StatTypesBox/Statistics';
 import FeedbackOptions from 'components/feedbackOptions';
 import NotificationMessage from 'components/notificationMessage';
 import Section from 'components/section';
-class Feedback extends Component {
-state = {good: 0,
-         neutral: 0,
-         bad: 0
-         }
 
-handleLeaveFeedback = (option) => {
+function Feedback({ options }) {
+  const [good, setGood] = useState(0);
+  const [neutral, setNeutral] = useState(0);
+  const [bad, setBad] = useState(0);
 
-this.setState(PrevState => ({
-[option.toLowerCase()]: PrevState[option.toLowerCase()] +1
-
-}))
-
-}
-countTotalFeedback = () => {
-  
-  return Object.values(this.state).reduce((total, item) => total + item, 0);
-     
-   }
- 
-countPositiveFeedbackPercentage = () => {
-  const { good, neutral, bad } = this.state;
-  return Math.round(good / (good + neutral + bad) * 100);  
+  const handleLeaveFeedback = option => {
+    switch (option) {
+      case 'Good':
+        setGood(state => state + 1);
+        break;
+      case 'Neutral':
+        setNeutral(state => state + 1);
+        break;
+      case 'Bad':
+        setBad(state => state + 1);
+        break;
+      default:
+        return;
     }
+  };
 
-render() {
-    const { good, neutral, bad } = this.state;
-   return (
-  <Container>
-<Section 
-title={"Please leave feedback"} 
-children={
-<FeedbackOptions
-options={options}
-onLeaveFeedback={this.handleLeaveFeedback}/>
-} 
-/>
-<Section
-title={"Statistics"}
-children={
-  (good + neutral + bad) === 0 ? 
-    <NotificationMessage /> : 
-    <Statistics 
-     good={good} 
-     neutral={neutral}
-     bad={bad}
-     total = {this.countTotalFeedback}
-     positivePercentage = {this.countPositiveFeedbackPercentage}
-     />}
+  let FeedbackValues = [good, neutral, bad];
 
-/>
+  const countTotalFeedback = () => {
+    return FeedbackValues.reduce((total, item) => total + item, 0);
+  };
 
-  </Container>
-        )
-    }
+  const countPositiveFeedbackPercentage = () => {
+    return Math.round((good / (good + neutral + bad)) * 100);
+  };
 
+  return (
+    <Container>
+      <Section
+        title={'Please leave feedback'}
+        children={
+          <FeedbackOptions
+            options={options}
+            onLeaveFeedback={handleLeaveFeedback}
+          />
+        }
+      />
+      <Section
+        title={'Statistics'}
+        children={
+          good + neutral + bad === 0 ? (
+            <NotificationMessage />
+          ) : (
+            <Statistics
+              good={good}
+              neutral={neutral}
+              bad={bad}
+              total={countTotalFeedback}
+              positivePercentage={countPositiveFeedbackPercentage}
+            />
+          )
+        }
+      />
+    </Container>
+  );
 }
 
 export default Feedback;
@@ -72,4 +76,4 @@ Feedback.propTypes = {
   countTotalFeedback: PropTypes.func,
   countPositiveFeedbackPercentage: PropTypes.func,
   options: PropTypes.arrayOf(PropTypes.string),
-}
+};

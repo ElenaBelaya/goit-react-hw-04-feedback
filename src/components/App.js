@@ -1,11 +1,10 @@
-import Feedback from "./feedback";
-
+import Feedback from './feedback';
+import options from '..//options.json';
 
 export const App = () => {
   return (
     <>
-   <Feedback />
-      
+      <Feedback options={options} />
     </>
   );
 };
