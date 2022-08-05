@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import { useState } from 'react';
 import { Container } from './Feedback.styled';
 import Statistics from 'components/StatTypesBox/Statistics';
@@ -6,20 +5,20 @@ import FeedbackOptions from 'components/feedbackOptions';
 import NotificationMessage from 'components/notificationMessage';
 import Section from 'components/section';
 
-function Feedback({ options }) {
+function Feedback() {
   const [good, setGood] = useState(0);
   const [neutral, setNeutral] = useState(0);
   const [bad, setBad] = useState(0);
 
   const handleLeaveFeedback = option => {
     switch (option) {
-      case 'Good':
+      case 'good':
         setGood(state => state + 1);
         break;
-      case 'Neutral':
+      case 'neutral':
         setNeutral(state => state + 1);
         break;
-      case 'Bad':
+      case 'bad':
         setBad(state => state + 1);
         break;
       default:
@@ -36,11 +35,11 @@ function Feedback({ options }) {
   const countPositiveFeedbackPercentage = () => {
     return Math.round((good / (good + neutral + bad)) * 100);
   };
-
+  const options = Object.keys({ good, neutral, bad });
   return (
     <Container>
       <Section
-        title={'Please leave feedback'}
+        title="Please leave feedback"
         children={
           <FeedbackOptions
             options={options}
@@ -49,7 +48,7 @@ function Feedback({ options }) {
         }
       />
       <Section
-        title={'Statistics'}
+        title="Statistics"
         children={
           good + neutral + bad === 0 ? (
             <NotificationMessage />
@@ -58,8 +57,8 @@ function Feedback({ options }) {
               good={good}
               neutral={neutral}
               bad={bad}
-              total={countTotalFeedback}
-              positivePercentage={countPositiveFeedbackPercentage}
+              total={countTotalFeedback()}
+              positivePercentage={countPositiveFeedbackPercentage()}
             />
           )
         }
@@ -69,11 +68,3 @@ function Feedback({ options }) {
 }
 
 export default Feedback;
-
-Feedback.propTypes = {
-  option: PropTypes.string,
-  handleLeaveFeedback: PropTypes.func,
-  countTotalFeedback: PropTypes.func,
-  countPositiveFeedbackPercentage: PropTypes.func,
-  options: PropTypes.arrayOf(PropTypes.string),
-};
